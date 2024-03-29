@@ -7,38 +7,38 @@ on: push
 
 jobs:
   build:
-    runs-on: ${{ matrix.runs-on }}
-    timeout-minutes: 60
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runs-on: ubuntu-latest
-            architecture: linux-amd64
-          - runs-on: macos-latest
-            architecture: osx-amd64
+    # runs-on: ${{ matrix.runs-on }}
+    # timeout-minutes: 60
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     include:
+    #       - runs-on: ubuntu-latest
+    #         architecture: linux-amd64
+    #       - runs-on: macos-latest
+    #         architecture: osx-amd64
     
-    name: Build on ${{ matrix.runs-on }}
+    # name: Build on ${{ matrix.runs-on }}
 
-    steps:
-      - name: Setup | Rust
-        uses: ATiltedTree/setup-rust@v1
-        with:
-          rust-version: stable
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build
-        run: |
-          cargo build --verbose --release;
+    # steps:
+    #   - name: Setup | Rust
+    #     uses: ATiltedTree/setup-rust@v1
+    #     with:
+    #       rust-version: stable
+    #   - name: Checkout
+    #     uses: actions/checkout@v3
+    #   - name: Build
+    #     run: |
+    #       cargo build --verbose --release;
 
-      - name: Upload t_renderer Artifact
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: t_renderer-${{ matrix.architecture }}
-          path: target/release/t_renderer
+    #   - name: Upload t_renderer Artifact
+    #     uses: actions/upload-artifact@v3.1.3
+    #     with:
+    #       name: t_renderer-${{ matrix.architecture }}
+    #       path: target/release/t_renderer
 
   build-on-aarch:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     timeout-minutes: 60
 
     name: Build on aarch64
@@ -50,7 +50,7 @@ jobs:
         uses: uraimo/run-on-arch-action@v2
         with:
           arch: aarch64
-          distro: ubuntu_latest
+          distro: ubuntu20.04
           setup: |
             mkdir -p "${PWD}/artifacts"
           dockerRunArgs: |
